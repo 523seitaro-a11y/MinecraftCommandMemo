@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Minecraft Command Memo</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">Minecraft Command Memo</p>
+          <h1>コマンドメモ</h1>
+        </div>
+        <div class="toolbar">
+          <button class="icon-button" id="exportBtn" type="button" title="JSONを書き出し">↓</button>
+          <label class="icon-button file-button" title="JSONを読み込み">
+            ↑
+            <input id="importInput" type="file" accept="application/json">
+          </label>
+          <button class="primary-button" id="newMemoBtn" type="button">新規メモ</button>
+        </div>
+      </header>
+
+      <main class="workspace">
+        <aside class="sidebar" aria-label="メモ一覧">
+          <div class="search-box">
+            <input id="searchInput" type="search" placeholder="タイトル、タグ、コマンドで検索">
+          </div>
+          <div class="filter-row" id="filterRow" aria-label="カテゴリ">
+            <button class="chip active" data-filter="all" type="button">すべて</button>
+            <button class="chip" data-filter="召喚" type="button">召喚</button>
+            <button class="chip" data-filter="装備" type="button">装備</button>
+            <button class="chip" data-filter="ワールド" type="button">ワールド</button>
+            <button class="chip" data-filter="その他" type="button">その他</button>
+          </div>
+          <div class="memo-list" id="memoList"></div>
+        </aside>
+
+        <section class="editor" aria-label="メモ編集">
+          <form id="memoForm">
+            <div class="form-grid">
+              <label>
+                <span>タイトル</span>
+                <input id="titleInput" required maxlength="80" placeholder="例: 最強ゾンビを召喚">
+              </label>
+              <label>
+                <span>カテゴリ</span>
+                <select id="categoryInput">
+                  <option>召喚</option>
+                  <option>装備</option>
+                  <option>ワールド</option>
+                  <option>建築</option>
+                  <option>ミニゲーム</option>
+                  <option>その他</option>
+                </select>
+              </label>
+            </div>
+
+            <label>
+              <span>コマンド</span>
+              <textarea id="commandInput" required spellcheck="false" placeholder="/give @p minecraft:diamond_sword{Enchantments:[{id:sharpness,lvl:5}]} 1"></textarea>
+            </label>
+
+            <div class="form-grid">
+              <label>
+                <span>タグ</span>
+                <input id="tagsInput" placeholder="Java, 1.21, ボス">
+              </label>
+              <label>
+                <span>バージョン</span>
+                <input id="versionInput" placeholder="Java 1.21.6">
+              </label>
+            </div>
+
+            <label>
+              <span>メモ</span>
+              <textarea id="noteInput" class="note-area" placeholder="使い方、注意点、座標、必要な権限など"></textarea>
+            </label>
+
+            <div class="actions">
+              <button class="danger-button" id="deleteBtn" type="button">削除</button>
+              <div>
+                <button class="ghost-button" id="copyBtn" type="button">コピー</button>
+                <button class="primary-button" type="submit">保存</button>
+              </div>
+            </div>
+          </form>
+        </section>
+      </main>
+    </div>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script src="app.js"></script>
+  </body>
+</html>
