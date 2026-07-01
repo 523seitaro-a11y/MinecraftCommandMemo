@@ -1,4 +1,5 @@
 const storageKey = "minecraft-command-memos";
+const repositoryUrl = "https://github.com/523seitaro-a11y/MinecraftCommandMemo";
 
 const starterMemos = [
   {
@@ -40,6 +41,7 @@ const elements = {
   note: document.querySelector("#noteInput"),
   deleteBtn: document.querySelector("#deleteBtn"),
   copyBtn: document.querySelector("#copyBtn"),
+  postBtn: document.querySelector("#postBtn"),
   newMemoBtn: document.querySelector("#newMemoBtn"),
   exportBtn: document.querySelector("#exportBtn"),
   importInput: document.querySelector("#importInput"),
@@ -181,6 +183,48 @@ async function copyCommand() {
   showToast("コマンドをコピーしました");
 }
 
+function postMemo() {
+  const title = elements.title.value.trim() || "無題のコマンド";
+  const category = elements.category.value;
+  const command = elements.command.value.trim();
+  const tags = elements.tags.value.trim();
+  const version = elements.version.value.trim();
+  const note = elements.note.value.trim();
+
+  if (!command || command === "/") {
+    showToast("投稿するコマンドを入力してください");
+    elements.command.focus();
+    return;
+  }
+
+  const body = [
+    "## コマンド",
+    "```mcfunction",
+    command,
+    "```",
+    "",
+    "## カテゴリ",
+    category || "未設定",
+    "",
+    "## バージョン",
+    version || "未設定",
+    "",
+    "## タグ",
+    tags || "なし",
+    "",
+    "## メモ",
+    note || "なし"
+  ].join("\n");
+
+  const params = new URLSearchParams({
+    template: "command-post.md",
+    title: `[投稿] ${title}`,
+    body
+  });
+  window.open(`${repositoryUrl}/issues/new?${params.toString()}`, "_blank", "noreferrer");
+  showToast("投稿画面を開きました");
+}
+
 function deleteMemo() {
   if (!selectedId) return;
   const memo = memos.find((item) => item.id === selectedId);
@@ -273,6 +317,7 @@ elements.filterRow.addEventListener("click", (event) => {
 elements.form.addEventListener("submit", handleSubmit);
 elements.newMemoBtn.addEventListener("click", createBlankMemo);
 elements.copyBtn.addEventListener("click", copyCommand);
+elements.postBtn.addEventListener("click", postMemo);
 elements.deleteBtn.addEventListener("click", deleteMemo);
 elements.exportBtn.addEventListener("click", exportMemos);
 elements.importInput.addEventListener("change", importMemos);

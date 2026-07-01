@@ -148,9 +148,11 @@ textarea:focus {
 
 .chip,
 .ghost-button,
+.post-button,
 .primary-button,
 .danger-button,
-.icon-button {
+.icon-button,
+.ghost-link {
   min-height: 40px;
   border: 2px solid #0e120d;
   color: var(--text);
@@ -178,6 +180,12 @@ textarea:focus {
   background: var(--stone);
 }
 
+.post-button {
+  padding: 0 16px;
+  background: #9f7a26;
+  font-weight: 800;
+}
+
 .danger-button {
   padding: 0 16px;
   background: #7c2d2b;
@@ -195,6 +203,17 @@ textarea:focus {
 
 .file-button input {
   display: none;
+}
+
+.ghost-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 86px;
+  padding: 0 12px;
+  background: var(--panel-strong);
+  text-decoration: none;
+  font-weight: 800;
 }
 
 .memo-list {
